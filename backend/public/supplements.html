@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplements — CludyCart</title>
+  <meta name="description" content="Evidence-based guides to vitamins, nootropics, and sports nutrition. Science, not hype.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="var(--accent)"/>
+          <path d="M7 6h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" stroke="#fff" stroke-width="1.5" fill="none"/>
+          <path d="M10 10h8M10 13.5h6M10 17h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>CludyCart</span>
+      </a>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="collection.html">All Books</a>
+        <a href="supplements.html" class="active">Supplements</a>
+        <a href="index.html#testimonials">Readers</a>
+      </div>
+      <div class="nav-actions">
+        <button class="btn-icon" id="cartBtn" aria-label="Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="closeMobile()">Home</a>
+    <a href="collection.html" onclick="closeMobile()">All Books</a>
+    <a href="supplements.html" class="active" onclick="closeMobile()">Supplements</a>
+    <a href="index.html#testimonials" onclick="closeMobile()">Readers</a>
+  </div>
+
+  <!-- CART DRAWER -->
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Your Library</h3>
+      <button class="btn-icon" onclick="closeCart()" aria-label="Close cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <p>Your library is empty</p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none;">
+      <div class="cart-total">
+        <span>Total</span>
+        <span id="cartTotal">$0</span>
+      </div>
+      <button class="btn btn-primary btn-lg w-full" onclick="openCheckout()">Checkout</button>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="collection-hero">
+    <div class="container">
+      <div class="collection-hero-content" data-reveal>
+        <a href="collection.html" class="collection-back">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to All Books
+        </a>
+        <h1>Supplements</h1>
+        <p>Evidence-based guides to vitamins, nootropics, sports nutrition, and more. Science, not hype.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKS -->
+  <section class="supplements-products">
+    <div class="container">
+      <div class="product-grid" id="productGrid">
+        <!-- Products injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-card" data-reveal>
+        <div class="newsletter-content">
+          <h2>Get weekly health tips</h2>
+          <p>Join 30,000+ readers getting supplement guides, dosage advice, and exclusive discounts.</p>
+        </div>
+        <form class="newsletter-form" onsubmit="handleSubscribe(event)">
+          <div class="input-group">
+            <input type="email" placeholder="you@example.com" required aria-label="Email address">
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </div>
+          <span class="input-note">No spam. Unsubscribe anytime.</span>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <rect width="28" height="28" rx="6" fill="var(--accent)"/>
+              <path d="M7 6h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" stroke="#fff" stroke-width="1.5" fill="none"/>
+              <path d="M10 10h8M10 13.5h6M10 17h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <span>CludyCart</span>
+          </a>
+          <p>Premium digital books for curious minds. Read, learn, and grow.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Genres</h4>
+          <a href="collection.html">All Books</a>
+          <a href="supplements.html">Supplements</a>
+          <a href="index.html#genres">Business</a>
+          <a href="index.html#genres">Technology</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Blog</a>
+          <a href="#">Authors</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Formats</a>
+          <a href="#">Refund Policy</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 CludyCart. All rights reserved.</span>
+        <div class="footer-social">
+          <a href="#" aria-label="Twitter">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="#" aria-label="Goodreads">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.43 22c-1.56 0-3.04-.5-4.26-1.43-.06-.04-.12-.09-.17-.14a6.02 6.02 0 0 1-1.55-4.37c0-3.35 3.04-6.06 6.8-6.06h.18c3.76 0 6.8 2.71 6.8 6.06 0 1.57-.57 3.02-1.55 4.13-.58.65-1.28 1.18-2.06 1.55a6.44 6.44 0 0 1-2.2.81 6.9 6.9 0 0 1-1.91-.55zm.57-11.63c-2.62 0-4.75 1.85-4.75 4.13 0 1.2.6 2.3 1.6 3.08.04.03.08.07.12.1.65.47 1.4.8 2.2.95.67.13 1.36.13 2.03 0 .8-.15 1.55-.48 2.2-.95.04-.03.08-.07.12-.1 1-.78 1.6-1.88 1.6-3.08 0-2.28-2.13-4.13-4.75-4.13h-1.37z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="modal-overlay" id="checkoutModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Checkout</h3>
+        <button class="btn-icon" onclick="closeCheckout()" aria-label="Close">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form class="checkout-form" onsubmit="handleCheckout(event)">
+        <div class="form-group">
+          <label for="checkout-name">Full Name</label>
+          <input type="text" id="checkout-name" placeholder="John Doe" required>
+        </div>
+        <div class="form-group">
+          <label for="checkout-email">Email</label>
+          <input type="email" id="checkout-email" placeholder="you@example.com" required>
+        </div>
+        <div class="form-group">
+          <label for="checkout-card">Card Number</label>
+          <input type="text" id="checkout-card" placeholder="4242 4242 4242 4242" required maxlength="19">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="checkout-exp">Expiry</label>
+            <input type="text" id="checkout-exp" placeholder="MM/YY" required maxlength="5">
+          </div>
+          <div class="form-group">
+            <label for="checkout-cvc">CVC</label>
+            <input type="text" id="checkout-cvc" placeholder="123" required maxlength="4">
+          </div>
+        </div>
+        <div class="checkout-summary">
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span id="checkoutSubtotal">$0</span>
+          </div>
+          <div class="summary-row">
+            <span>Processing</span>
+            <span>Free</span>
+          </div>
+          <div class="summary-row total">
+            <span>Total</span>
+            <span id="checkoutTotal">$0</span>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg w-full" id="checkoutBtn">Pay Now</button>
+        <p class="checkout-note">Secured by 256-bit SSL encryption</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="supplements.js"></script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+# Dependencies
+/backend/vendor/
+
+# Environment
+/backend/.env
+/backend/.env.backup
+/backend/.env.production
+
+# Database
+/backend/database/database.sqlite
+
+# Laravel
+/backend/storage/logs/*
+/backend/storage/framework/cache/*
+/backend/storage/framework/sessions/*
+/backend/storage/framework/views/*
+/backend/bootstrap/cache/*
+
+# Uploads
+/backend/public/uploads/*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
