@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Handle requests for backend (Laravel)
+RewriteCond %{REQUEST_URI} ^/(admin|api)(.*)$
+RewriteCond %{DOCUMENT_ROOT}/backend/public/$1 -d [OR]
+RewriteCond %{DOCUMENT_ROOT}/backend/public/$1 -f
+RewriteRule ^backend/public/index.php [L,QSA]
+
+# Route admin and API to Laravel
+RewriteRule ^admin(.*)$ backend/public/index.php [L,QSA]
+RewriteRule ^api(.*)$ backend/public/index.php [L,QSA]
+
+# Serve existing static files
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Root to index.html
+RewriteRule ^$ index.html [L]
